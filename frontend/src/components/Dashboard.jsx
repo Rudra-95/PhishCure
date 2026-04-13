@@ -62,7 +62,7 @@ export default function Dashboard() {
         const usrStr = localStorage.getItem('currentUser');
         if (usrStr) {
           const user = JSON.parse(usrStr);
-          fetch('http://localhost:5000/api/admin/logs/add', {
+          fetch(`${import.meta.env.VITE_API_URL}/api/admin/logs/add`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
