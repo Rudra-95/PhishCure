@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -34,7 +34,7 @@ export default function Dashboard() {
     setAnalysisState('loading');
     
     try {
-      const response = await fetch('http://localhost:5000/analyze', {
+      const response = await fetch('https://phishcure-backend.onrender.com/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: inputType, value: url }),
