@@ -34,7 +34,7 @@ export default function Dashboard() {
     setAnalysisState('loading');
     
     try {
-      const response = await fetch('https://phishcure-backend.onrender.com/analyze', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: inputType, value: url }),
