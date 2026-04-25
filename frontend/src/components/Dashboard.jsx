@@ -186,6 +186,30 @@ const DashboardResults = ({ results, scoreColor }) => {
   const { score, verdict, summary, sources, details, trusted_alternatives } = results;
   const showAlternatives = trusted_alternatives && trusted_alternatives.length > 0;
 
+  const getSidebarContent = (s) => {
+    if (s >= 80) {
+      return {
+        icon: '✅',
+        title: 'Further Reading',
+        desc: 'This source looks highly reliable. Explore more coverage on this topic:'
+      };
+    } else if (s >= 50) {
+      return {
+        icon: '⚠️',
+        title: 'Exercise Caution',
+        desc: 'This source has mixed signals. We suggest verifying with these established counterparts:'
+      };
+    } else {
+      return {
+        icon: '🛑',
+        title: 'Safe Alternatives',
+        desc: 'This source is highly suspicious. Please discard it and use these verified sources instead:'
+      };
+    }
+  };
+
+  const sidebar = getSidebarContent(score);
+
   return (
     <div className={`dashboard-layout ${showAlternatives ? 'has-sidebar' : ''}`}>
       <div className="dashboard-grid">
@@ -239,10 +263,10 @@ const DashboardResults = ({ results, scoreColor }) => {
       </div>
 
       {showAlternatives && (
-        <aside className="glass-panel alternatives-sidebar">
-          <div className="alert-icon">⚠️</div>
-          <h3>Trusted Alternatives</h3>
-          <p className="alt-desc">We strongly suggest visiting these verified counterparts instead:</p>
+        <aside className="glass-panel alternatives-sidebar" style={{ borderTop: `4px solid ${scoreColor}` }}>
+          <div className="alert-icon" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{sidebar.icon}</div>
+          <h3 style={{ color: scoreColor }}>{sidebar.title}</h3>
+          <p className="alt-desc">{sidebar.desc}</p>
           <div className="alt-list">
             {trusted_alternatives.map((alt, idx) => (
               <a key={idx} href={alt.url} target="_blank" rel="noreferrer" className="alt-card">
