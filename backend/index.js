@@ -65,8 +65,20 @@ app.post("/analyze", async (req, res) => {
         let trustedAlternatives = [];
         if (process.env.GNEWS_API_KEY && !process.env.GNEWS_API_KEY.includes('your_gnews_api_key_here')) {
             try {
-                // simple search term extraction from value
-                const query = type === 'url' ? 'latest news' : value.substring(0, 50).replace(/[^a-zA-Z0-9 ]/g, " ");
+                let query = "latest news";
+                if (type === 'url') {
+                    try {
+                        const urlObj = new URL(value.startsWith('http') ? value : 'http://' + value);
+                        query = urlObj.hostname.replace('www.', '').split('.')[0];
+                        if (urlObj.pathname.length > 10 && urlObj.pathname !== '/') {
+                            query = urlObj.pathname.replace(/[-_/]/g, ' ').trim();
+                        }
+                    } catch (e) {
+                        query = value.substring(0, 50).replace(/[^a-zA-Z0-9 ]/g, " ").trim();
+                    }
+                } else {
+                    query = value.substring(0, 50).replace(/[^a-zA-Z0-9 ]/g, " ").trim();
+                }
                 const gnewsUrl = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&country=us&max=3&apikey=${process.env.GNEWS_API_KEY}`;
                 
                 const gnewsRes = await axios.get(gnewsUrl);
