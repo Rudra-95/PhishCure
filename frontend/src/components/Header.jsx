@@ -84,6 +84,11 @@ export default function Header() {
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>Hi, {currentUser.username}</span>
             </div>
+            {currentUser.username && currentUser.username.toLowerCase() === 'admin' && (
+              <Link to="/admin" className="btn-primary" style={{ padding: '8px 16px', background: 'transparent', border: '1px solid var(--color-primary)', color: 'var(--color-primary)', fontSize: '0.85rem' }}>
+                Admin Panel
+              </Link>
+            )}
             <button onClick={handleLogout} className="btn-primary" style={{ padding: '8px 16px', background: 'rgba(231, 76, 60, 0.8)', fontSize: '0.85rem' }}>
               Logout
             </button>
