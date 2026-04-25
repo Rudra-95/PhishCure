@@ -85,11 +85,28 @@ export default function Home() {
           textAlign: 'center',
           backdropFilter: 'blur(20px)'
         }}>
-          <h2 style={{ fontSize: '2.5rem', color: 'var(--color-text-main)', marginBottom: '1rem' }}>Protect Every Click Automatically.</h2>
-          <p style={{ fontSize: '1.1rem', color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto 2rem auto' }}>
+          <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', color: 'var(--color-text-main)', marginBottom: '1rem' }}>Protect Every Click Automatically.</h2>
+          <p style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)', color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto 2rem auto' }}>
             Don't waste time copying and pasting URLs. Install the PhishCure Chrome Extension to violently block zero-day phishing sites the millisecond they try to load on your machine.
           </p>
-          <button className="btn-primary" style={{ padding: '16px 32px', fontSize: '1.1rem', background: '#e74c3c', boxShadow: '0 8px 24px rgba(231, 76, 60, 0.4)' }}>
+          <button 
+            className="btn-primary" 
+            style={{ 
+              padding: '16px 32px', 
+              fontSize: '1.1rem', 
+              background: '#e74c3c', 
+              boxShadow: '0 8px 24px rgba(231, 76, 60, 0.4)',
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+              width: 'clamp(250px, 80%, 400px)'
+            }}
+            onMouseOver={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(231, 76, 60, 0.6)'; }}
+            onMouseOut={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(231, 76, 60, 0.4)'; }}
+            onClick={() => {
+              if (window.confirm("You are about to be redirected to the Chrome Webstore to install the PhishCure extension. Would you like to proceed?")) {
+                window.open("https://chrome.google.com/webstore", "_blank");
+              }
+            }}
+          >
             ⬇ Install Chrome Extension — Free
           </button>
         </div>

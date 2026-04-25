@@ -100,12 +100,18 @@ app.post("/analyze", async (req, res) => {
 });
 
 console.log("MONGO_URI:", process.env.MONGO_URI);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     console.log("MongoDB Connected");
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
 })
-.catch(err => console.log(err));
+.catch(err => {
+    console.log("CRITICAL MONGODB ERROR: Cannot connect to DB.");
+    console.log("Ensure your IP is whitelisted on MongoDB Atlas: https://www.mongodb.com/docs/atlas/security-whitelist/");
+    console.error(err);
+});

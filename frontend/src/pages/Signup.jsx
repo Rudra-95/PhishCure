@@ -2,49 +2,41 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 
-export default function Login() {
+export default function Signup() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     setError('');
-    setIsLoading(true);
+    setSuccess('');
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, email, password }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message || 'incorrect username or password');
+        setError(data.message || 'Error creating account');
         return;
       }
 
-      // If login successful
-      localStorage.setItem('currentUser', JSON.stringify(data.user));
-      window.dispatchEvent(new Event('auth-change'));
-      
-      if (data.user.username && data.user.username.toLowerCase() === 'admin') {
-        navigate('/admin');
-      } else {
-        navigate('/dashboard');
-      }
+      setSuccess('Account created successfully! Redirecting to login...');
+      setTimeout(() => navigate('/login'), 2000);
 
     } catch (err) {
       console.error(err);
       setError('Could not connect to the server');
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -53,12 +45,13 @@ export default function Login() {
       <div className="glass-panel login-card">
         <div className="login-header">
           <h1>PhishCure</h1>
-          <p>Sign in to your account</p>
+          <p>Create your account</p>
         </div>
 
         {error && <div className="error-message">{error}</div>}
+        {success && <div className="success-message">{success}</div>}
 
-        <form className="login-form" onSubmit={handleLogin}>
+        <form className="login-form" onSubmit={handleSignup}>
           <div className="input-group">
             <label htmlFor="username">Username</label>
             <input
@@ -66,7 +59,19 @@ export default function Login() {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
+              placeholder="Choose a username"
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
               required
             />
           </div>
@@ -78,22 +83,19 @@ export default function Login() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder="Create a password"
               required
             />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Link to="/forgot-password" className="forgot-password-link" style={{ alignSelf: 'auto' }}>
-              Forgot Password?
-            </Link>
-            <Link to="/signup" className="forgot-password-link" style={{ alignSelf: 'auto' }}>
-              Sign Up
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '0.5rem' }}>
+            <Link to="/login" className="forgot-password-link" style={{ alignSelf: 'auto' }}>
+              Already have an account? Login
             </Link>
           </div>
 
-          <button type="submit" className="btn-primary" style={{ marginTop: '1rem', width: '100%' }} disabled={isLoading}>
-            {isLoading ? 'Logging in...' : 'Login'}
+          <button type="submit" className="btn-primary" style={{ marginTop: '1rem', width: '100%' }}>
+            Sign Up
           </button>
         </form>
       </div>
