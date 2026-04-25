@@ -29,7 +29,7 @@ export default function AdminDashboard() {
     }
 
     // Fetch master user list
-    fetch('http://localhost:5000/api/admin/users')
+    fetch(`${import.meta.env.VITE_API_URL}/api/admin/users`)
       .then(res => res.json())
       .then(data => {
         setUsers(data);
@@ -51,7 +51,7 @@ export default function AdminDashboard() {
     // Fetch logs only if not cached already
     if (!userLogs[username]) {
       setLoadingLogsFor(username);
-      fetch(`http://localhost:5000/api/admin/logs/${encodeURIComponent(username)}`)
+      fetch(`${import.meta.env.VITE_API_URL}/api/admin/logs/${encodeURIComponent(username)}`)
         .then(res => res.json())
         .then(data => {
           setUserLogs(prev => ({ ...prev, [username]: data }));
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
     if (!window.confirm("Are you sure you want to permanently delete this search artifact?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/logs/delete/${logId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/logs/delete/${logId}`, {
         method: 'DELETE'
       });
       if (res.ok) {

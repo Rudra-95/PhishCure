@@ -15,7 +15,7 @@ export default function ForgotPassword() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/forgot-password', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -27,7 +27,7 @@ export default function ForgotPassword() {
         setError(data.message || 'Error sending link');
       } else {
         // We simulate the Email inbox right on the screen
-        setSimulatedLink(`http://localhost:5173/reset-password/${data.resetToken}`);
+        setSimulatedLink(`${window.location.origin}/reset-password/${data.resetToken}`);
       }
     } catch (err) {
       console.error(err);
