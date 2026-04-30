@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "PhishCure Proactive Interceptor",
+  "version": "1.0",
+  "description": "Enterprise-grade Zero-Click Threat Interception and Smart DOM Pre-Filtering.",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://phishcure-backend.onrender.com/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ]
+}

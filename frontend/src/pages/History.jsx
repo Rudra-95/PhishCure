@@ -4,9 +4,15 @@ import { Link } from 'react-router-dom';
 export default function History() {
   const [history, setHistory] = useState([]);
 
+  const getStorageKey = () => {
+    const userStr = localStorage.getItem('currentUser');
+    const user = userStr ? JSON.parse(userStr) : null;
+    return user ? `phishcure_history_${user.username}` : 'phishcure_history';
+  };
+
   useEffect(() => {
     try {
-      const data = JSON.parse(localStorage.getItem('phishcure_history') || '[]');
+      const data = JSON.parse(localStorage.getItem(getStorageKey()) || '[]');
       setHistory(data);
     } catch (err) {
       setHistory([]);
@@ -14,7 +20,7 @@ export default function History() {
   }, []);
 
   const clearHistory = () => {
-    localStorage.removeItem('phishcure_history');
+    localStorage.removeItem(getStorageKey());
     setHistory([]);
   };
 

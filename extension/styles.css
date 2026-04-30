@@ -1,0 +1,156 @@
+/* Pre-Filtering Glow for Suspicious Links */
+.phishcure-suspicious-link {
+  position: relative !important;
+  box-shadow: 0 0 8px rgba(231, 76, 60, 0.6) !important;
+  border-bottom: 2px dashed #e74c3c !important;
+  transition: all 0.3s ease !important;
+}
+
+.phishcure-suspicious-link:hover {
+  box-shadow: 0 0 12px rgba(231, 76, 60, 0.9) !important;
+  background-color: rgba(231, 76, 60, 0.1) !important;
+}
+
+/* Glassmorphism Intercept Modal */
+#phishcure-intercept-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2147483647; /* Max z-index */
+  background: rgba(10, 15, 30, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  opacity: 0;
+  animation: phishcureFadeIn 0.3s forwards;
+}
+
+.phishcure-modal {
+  background: rgba(20, 25, 45, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.05) inset;
+  border-radius: 16px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  color: #fff;
+  transform: translateY(20px);
+  animation: phishcureSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.phishcure-modal.danger {
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  box-shadow: 0 0 40px rgba(231, 76, 60, 0.15);
+}
+
+.phishcure-modal.safe {
+  border: 1px solid rgba(46, 204, 113, 0.4);
+  box-shadow: 0 0 40px rgba(46, 204, 113, 0.15);
+}
+
+.phishcure-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-left-color: #3498db;
+  border-radius: 50%;
+  animation: phishcureSpin 1s linear infinite;
+  margin: 0 auto 1.5rem auto;
+}
+
+.phishcure-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  background: linear-gradient(135deg, #fff, #a0a5b0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.phishcure-text {
+  font-size: 1rem;
+  color: #a0a5b0;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+}
+
+.phishcure-url-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #3498db;
+  word-break: break-all;
+  margin-bottom: 1.5rem;
+}
+
+.phishcure-reasoning {
+  background: rgba(231, 76, 60, 0.1);
+  border-left: 4px solid #e74c3c;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: left;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.phishcure-btn-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.phishcure-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+
+.phishcure-btn-primary {
+  background: #3498db;
+  color: #fff;
+}
+.phishcure-btn-primary:hover { background: #2980b9; }
+
+.phishcure-btn-danger {
+  background: #e74c3c;
+  color: #fff;
+}
+.phishcure-btn-danger:hover { background: #c0392b; }
+
+.phishcure-btn-outline {
+  background: transparent;
+  color: #a0a5b0;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.phishcure-btn-outline:hover {
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+}
+
+@keyframes phishcureSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes phishcureFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes phishcureSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

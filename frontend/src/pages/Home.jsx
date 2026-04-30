@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import GlobalThreatRadar from "../components/GlobalThreatRadar";
 import './Home.css';
 
 export default function Home() {
@@ -75,41 +76,56 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Feature 5: Browser Extension Promo CTA */}
-        <div className="extension-promo slide-up-delay" style={{ 
-          marginTop: '4rem', 
-          background: 'linear-gradient(135deg, rgba(126, 87, 194, 0.2), rgba(209, 196, 233, 0.1))',
-          border: '1px solid var(--color-primary)',
-          borderRadius: '24px',
-          padding: '4rem 2rem',
-          textAlign: 'center',
-          backdropFilter: 'blur(20px)'
-        }}>
-          <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', color: 'var(--color-text-main)', marginBottom: '1rem' }}>Protect Every Click Automatically.</h2>
-          <p style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)', color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto 2rem auto' }}>
-            Don't waste time copying and pasting URLs. Install the PhishCure Chrome Extension to violently block zero-day phishing sites the millisecond they try to load on your machine.
-          </p>
-          <button 
-            className="btn-primary" 
-            style={{ 
-              padding: '16px 32px', 
-              fontSize: '1.1rem', 
-              background: '#e74c3c', 
-              boxShadow: '0 8px 24px rgba(231, 76, 60, 0.4)',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              width: 'clamp(250px, 80%, 400px)'
-            }}
-            onMouseOver={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(231, 76, 60, 0.6)'; }}
-            onMouseOut={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(231, 76, 60, 0.4)'; }}
-            onClick={() => {
-              if (window.confirm("You are about to be redirected to the Chrome Webstore to install the PhishCure extension. Would you like to proceed?")) {
-                window.open("https://chrome.google.com/webstore", "_blank");
-              }
-            }}
-          >
-            ⬇ Install Chrome Extension — Free
-          </button>
+        {/* Feature 5: Browser Extension Interactive Tutorial */}
+        <div className="extension-tutorial glass-panel slide-up-delay" style={{ marginTop: '4rem', padding: '3rem 2rem' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem', alignItems: 'center' }}>
+            <div style={{ flex: '1 1 400px', textAlign: 'left' }}>
+              <h2 style={{ fontSize: '2.5rem', color: '#f39c12', marginBottom: '1rem', textShadow: '0 0 15px rgba(243, 156, 18, 0.4)' }}>
+                Enable X-Ray Vision.
+              </h2>
+              <p style={{ fontSize: '1.1rem', color: 'var(--color-text-muted)', marginBottom: '2rem', lineHeight: '1.6' }}>
+                Don't wait until you've already clicked a malicious link. Install our Proactive DOM Scanner to violently intercept zero-day phishing sites the millisecond they attempt to load in your browser.
+              </p>
+              
+              <div style={{ background: 'rgba(0,0,0,0.4)', borderRadius: '12px', padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <h4 style={{ color: '#2ecc71', margin: '0 0 1rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span style={{ fontSize: '1.5rem' }}>🚀</span> 3-Step Activation Protocol
+                </h4>
+                <ol style={{ color: 'var(--color-text-main)', paddingLeft: '1.5rem', margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                  <li>Go to <strong>chrome://extensions</strong> in your browser.</li>
+                  <li>Enable <strong>Developer mode</strong> in the top right.</li>
+                  <li>Click <strong>Load unpacked</strong> and select the PhishCure <code style={{ background: 'rgba(255,255,255,0.1)', padding: '2px 6px', borderRadius: '4px' }}>extension/</code> folder.</li>
+                </ol>
+              </div>
+              
+              <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(52, 152, 219, 0.1)', borderLeft: '4px solid #3498db', borderRadius: '4px' }}>
+                <p style={{ margin: 0, color: 'var(--color-text-main)', fontSize: '0.95rem' }}>
+                  <strong>Pro-Tip:</strong> Once installed, simply hold <kbd style={{ background: '#333', padding: '2px 6px', borderRadius: '4px', fontSize: '0.8rem' }}>Alt</kbd> + <strong>Click</strong> on any link across the web to instantly force a deep AI scan!
+                </p>
+              </div>
+            </div>
+            
+            <div style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center' }}>
+               <div style={{ 
+                 width: '100%', maxWidth: '400px', height: '300px', 
+                 background: 'linear-gradient(145deg, #1a1f2e, #111520)',
+                 borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)',
+                 boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+                 position: 'relative', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center'
+               }}>
+                 <div style={{ textAlign: 'center', zIndex: 2 }}>
+                    <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🛑</div>
+                    <h3 style={{ color: '#e74c3c', margin: '0 0 0.5rem 0' }}>Navigation Blocked</h3>
+                    <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', padding: '0 20px' }}>PhishCure AI intercepted a high-risk connection mid-air.</p>
+                 </div>
+                 {/* Decorative background grid */}
+                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundImage: 'linear-gradient(rgba(231,76,60,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(231,76,60,0.05) 1px, transparent 1px)', backgroundSize: '20px 20px', zIndex: 1 }}></div>
+               </div>
+            </div>
+          </div>
         </div>
+
+        <GlobalThreatRadar />
 
         <div className="trusted-by" style={{ marginTop: '4rem' }}>
           <p>ARCHITECTURE POWERED BY</p>

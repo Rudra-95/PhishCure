@@ -13,7 +13,10 @@ export default function Dashboard() {
 
   useEffect(() => {
     // Feature 3: Load recent scans
-    const history = JSON.parse(localStorage.getItem('phishcure_history') || '[]');
+    const userStr = localStorage.getItem('currentUser');
+    const user = userStr ? JSON.parse(userStr) : null;
+    const storageKey = user ? `phishcure_history_${user.username}` : 'phishcure_history';
+    const history = JSON.parse(localStorage.getItem(storageKey) || '[]');
     setRecentScans(history.slice(0, 3));
   }, [analysisState]);
 
@@ -48,7 +51,11 @@ export default function Dashboard() {
 
       // Hook for History feature caching
       try {
-        const history = JSON.parse(localStorage.getItem('phishcure_history') || '[]');
+        const userStr = localStorage.getItem('currentUser');
+        const user = userStr ? JSON.parse(userStr) : null;
+        const storageKey = user ? `phishcure_history_${user.username}` : 'phishcure_history';
+        
+        const history = JSON.parse(localStorage.getItem(storageKey) || '[]');
         history.unshift({
           url: url.substring(0, 50) + (url.length > 50 ? '...' : ''),
           type: inputType,
@@ -56,12 +63,10 @@ export default function Dashboard() {
           score: data.score,
           date: new Date().toISOString()
         });
-        localStorage.setItem('phishcure_history', JSON.stringify(history.slice(0, 100))); // keep latest 100
+        localStorage.setItem(storageKey, JSON.stringify(history.slice(0, 100))); // keep latest 100
         
         // Also log to backend if a user is logged in
-        const usrStr = localStorage.getItem('currentUser');
-        if (usrStr) {
-          const user = JSON.parse(usrStr);
+        if (user) {
           fetch(`${import.meta.env.VITE_API_URL}/api/admin/logs/add`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
