@@ -158,6 +158,23 @@ document.addEventListener('click', async (e) => {
             window.location.href = targetUrl;
           }, 1500);
 
+        } else if (score === 50 && summary.includes('failed')) {
+          // AI Connection / Rate Limit Error
+          modalBox.className = 'phishcure-modal';
+          icon.innerText = '⚠️';
+          title.innerText = 'AI Analysis Unavailable';
+          title.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+          title.style.webkitBackgroundClip = 'text';
+          desc.innerText = 'The PhishCure AI backend is currently rate-limited or unreachable.';
+          
+          reasoning.innerText = summary;
+          reasoning.style.display = 'block';
+          
+          actions.style.display = 'flex';
+          btnProceed.className = 'phishcure-btn phishcure-btn-primary';
+          btnProceed.innerText = 'Proceed Unverified';
+          btnCancel.className = 'phishcure-btn phishcure-btn-outline';
+          btnCancel.innerText = 'Go Back';
         } else {
           // Danger - BLOCK
           modalBox.className = 'phishcure-modal danger';
