@@ -55,11 +55,17 @@ app.post("/analyze", async (req, res) => {
                 });
 
                 if (response.choices[0]?.message?.content) {
-                     aiDetails = JSON.parse(response.choices[0].message.content);
+                     let content = response.choices[0].message.content;
+                     content = content.replace(/```json/gi, '').replace(/```/g, '').trim();
+                     aiDetails = JSON.parse(content);
                 }
             } catch (err) {
                 console.error("Groq Error:", err);
+                // Expose the actual error message to the user instead of generic failure
+                aiDetails.summary = `Groq AI Error: ${err.message || 'Rate limit or connection issue.'}`;
             }
+        } else {
+            aiDetails.summary = "Groq API Key is missing or invalid on the server.";
         }
 
         let trustedAlternatives = [];
