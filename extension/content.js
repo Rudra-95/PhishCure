@@ -105,8 +105,8 @@ document.addEventListener('click', async (e) => {
   if (!link || !link.href) return;
 
   // We only aggressively intercept links that were flagged locally as suspicious
-  // Or if the user explicitly held the 'Alt' key while clicking (manual scan mode)
-  if (link.classList.contains('phishcure-suspicious-link') || e.altKey) {
+  // Or if the user explicitly held the 'Alt' or 'Shift' key while clicking (manual scan mode)
+  if (link.classList.contains('phishcure-suspicious-link') || e.altKey || e.shiftKey) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -133,11 +133,11 @@ document.addEventListener('click', async (e) => {
       spinner.style.display = 'none';
       icon.style.display = 'block';
 
-      if (!response || !response.success) {
-        // Error handling
+      if (chrome.runtime.lastError || !response || !response.success) {
+        // Error handling: Background worker died, timed out, or fetch failed
         icon.innerText = '⚠️';
-        title.innerText = 'Scan Failed';
-        desc.innerText = 'Could not reach the PhishCure AI backend. Proceed with caution.';
+        title.innerText = 'Scan Failed / Timeout';
+        desc.innerText = 'The AI Backend might be asleep or unreachable. ' + (chrome.runtime.lastError ? chrome.runtime.lastError.message : '');
         actions.style.display = 'flex';
         btnProceed.className = 'phishcure-btn phishcure-btn-primary';
       } else {

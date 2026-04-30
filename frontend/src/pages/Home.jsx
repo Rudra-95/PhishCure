@@ -100,7 +100,7 @@ export default function Home() {
               
               <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(52, 152, 219, 0.1)', borderLeft: '4px solid #3498db', borderRadius: '4px' }}>
                 <p style={{ margin: 0, color: 'var(--color-text-main)', fontSize: '0.95rem' }}>
-                  <strong>Pro-Tip:</strong> Once installed, simply hold <kbd style={{ background: '#333', padding: '2px 6px', borderRadius: '4px', fontSize: '0.8rem' }}>Alt</kbd> + <strong>Click</strong> on any link across the web to instantly force a deep AI scan!
+                  <strong>Pro-Tip:</strong> Once installed, simply hold <kbd style={{ background: '#333', padding: '2px 6px', borderRadius: '4px', fontSize: '0.8rem' }}>Shift</kbd> + <strong>Click</strong> on any link across the web to instantly force a deep AI scan!
                 </p>
               </div>
             </div>
